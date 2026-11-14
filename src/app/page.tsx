@@ -26,7 +26,6 @@ const jsonLd = {
   slogan: "Projects | Products | Programs | Promotions",
   description: site.description,
   email: site.email,
-  telephone: site.phone,
   legalName: site.legalName,
   address: {
     "@type": "PostalAddress",

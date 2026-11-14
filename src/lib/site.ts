@@ -6,8 +6,6 @@ export const site = {
     "4pro helps organizations grow, operate efficiently and create lasting impact — globally. Digital growth, BPO, staffing, training, software solutions and branded merchandise from Chennai, India.",
   legalName: "4Pro Consulting LLP",
   email: "info@4proconsulting.com",
-  // TODO: replace with the real phone number
-  phone: "+91 44 0000 0000",
   // TODO: replace with the real profile URLs
   social: {
     facebook: "https://www.facebook.com/",

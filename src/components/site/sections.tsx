@@ -19,7 +19,6 @@ import {
   MapPin,
   Megaphone,
   MonitorSmartphone,
-  Phone,
   PiggyBank,
   Rocket,
   Search,
@@ -828,11 +827,6 @@ export function Contact() {
                 {site.email}
               </a>
             </ContactItem>
-            <ContactItem icon={Phone} label="Phone">
-              <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-brand">
-                {site.phone}
-              </a>
-            </ContactItem>
           </ul>
           <ContactButton className={`${btn.primary} reveal mt-8`}>
             Let&apos;s Connect <ArrowUpRight className="size-4" aria-hidden />
@@ -928,11 +922,6 @@ export function Footer() {
           <li>
             <a href={`mailto:${site.email}`} className="hover:text-brand">
               {site.email}
-            </a>
-          </li>
-          <li>
-            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className="hover:text-brand">
-              {site.phone}
             </a>
           </li>
         </FooterCol>
