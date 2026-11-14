@@ -8,6 +8,12 @@ export const site = {
   email: "info@4pro.org",
   // TODO: replace with the real phone number
   phone: "+91 44 0000 0000",
+  // TODO: replace with the real profile URLs
+  social: {
+    facebook: "https://www.facebook.com/",
+    twitter: "https://x.com/",
+    instagram: "https://www.instagram.com/",
+  },
   address: {
     lines: [
       "No: 158(131), 156(132) & 154(133),",

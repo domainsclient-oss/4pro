@@ -39,6 +39,7 @@ import { site, nav } from "@/lib/site";
 import { ContactButton } from "./contact-dialog";
 import { highlights } from "@/lib/highlights";
 import { SectionHeading, btn } from "./ui";
+import { SocialLinks } from "./social-icons";
 
 import heroImg from "../../../public/images/hero.webp";
 import digitalImg from "../../../public/images/digital.webp";
@@ -893,6 +894,7 @@ export function Footer() {
           <p className="mt-6 max-w-sm leading-relaxed text-muted-foreground">
             Technology. People. Creativity. Purpose. Helping organizations grow, operate efficiently and create lasting impact — globally.
           </p>
+          <SocialLinks className="mt-7" />
         </div>
         <FooterCol title="Company">
           {nav.map((n) => (
