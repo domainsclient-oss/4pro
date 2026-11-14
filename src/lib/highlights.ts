@@ -1,7 +1,7 @@
 import { Globe2, HeartHandshake, Layers3, Sprout } from "lucide-react";
 
 export const highlights = [
-  { icon: Globe2, title: "Global Delivery", text: "Singapore | India | Worldwide" },
+  { icon: Globe2, title: "Global Delivery", text: "Chennai | India | Worldwide" },
   {
     icon: Layers3,
     title: "Diverse Industries",

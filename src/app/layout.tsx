@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "CRM",
     "LMS",
     "branded merchandise",
-    "Singapore",
+    "Chennai",
     "India",
   ],
   alternates: { canonical: "/" },

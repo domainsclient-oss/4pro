@@ -23,7 +23,6 @@ import {
   PiggyBank,
   Rocket,
   Search,
-  Shirt,
   ShoppingBag,
   Sparkles,
   Target,
@@ -50,7 +49,6 @@ import softwareImg from "../../../public/images/software.webp";
 import erpImg from "../../../public/images/erp.webp";
 import crmImg from "../../../public/images/crm.webp";
 import lmsImg from "../../../public/images/lms.webp";
-import merchImg from "../../../public/images/merch.webp";
 import accessoriesImg from "../../../public/images/accessories.webp";
 import souvenirsImg from "../../../public/images/souvenirs.webp";
 import ctaImg from "../../../public/images/cta.webp";
@@ -127,8 +125,8 @@ export function Hero() {
               <Globe2 className="size-5" aria-hidden />
             </span>
             <span className="leading-tight">
-              <span className="block text-sm font-bold">Singapore HQ</span>
-              <span className="block text-xs text-muted-foreground">India delivery · Worldwide</span>
+              <span className="block text-sm font-bold">Based in Chennai</span>
+              <span className="block text-xs text-muted-foreground">Serving clients worldwide</span>
             </span>
           </div>
           <div
@@ -509,7 +507,6 @@ export function Software() {
 /* ───────────────────────── MERCHANDISE ───────────────────────── */
 
 const merch = [
-  { icon: Shirt, name: "T-Shirts", text: "Custom designs for teams, events and ministries.", img: merchImg, alt: "Person wearing a plain white t-shirt ready for custom printing" },
   { icon: ShoppingBag, name: "Accessories", text: "Caps, bags, bottles, lanyards and more.", img: accessoriesImg, alt: "Branded backpack and accessories" },
   { icon: Gift, name: "Souvenirs", text: "Meaningful gifts for conferences, events and special occasions.", img: souvenirsImg, alt: "Gift box wrapped with a ribbon" },
 ];
@@ -533,14 +530,14 @@ export function Merchandise() {
         </div>
 
         <p className="reveal mt-10 flex flex-wrap gap-2" aria-label="Product range">
-          {["T-shirts", "Hoodies", "Caps", "Mugs", "Bottles", "Tote bags", "Notebooks", "Lanyards"].map((p) => (
+          {["Hoodies", "Caps", "Mugs", "Bottles", "Tote bags", "Notebooks", "Lanyards"].map((p) => (
             <span key={p} className="rounded-full border border-brand/20 bg-white px-4 py-1.5 text-sm font-semibold text-ink/80">
               {p}
             </span>
           ))}
         </p>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 md:grid-cols-2">
           {merch.map(({ icon: Icon, name, text, img, alt }) => (
             <article
               key={name}
@@ -550,8 +547,8 @@ export function Merchandise() {
                 src={img}
                 alt={alt}
                 placeholder="blur"
-                sizes="(min-width: 768px) 30vw, 92vw"
-                className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105"
+                sizes="(min-width: 768px) 46vw, 92vw"
+                className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-105 sm:aspect-[4/3]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/30 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-7">
@@ -622,7 +619,7 @@ const clients: {
   {
     icon: Earth,
     name: "Global Clients",
-    text: "Serving organizations worldwide from our hubs in Singapore and India.",
+    text: "Serving organizations worldwide from our base in Chennai, India.",
     img: globalImg,
     alt: "World map carved into a wooden wall",
     span: "sm:col-span-2",
@@ -686,7 +683,7 @@ const why: { icon: LucideIcon; title: string; text: string; featured?: boolean }
   {
     icon: Globe2,
     title: "Global Delivery Model",
-    text: "Headquartered in Singapore with delivery teams in India, serving clients across the world.",
+    text: "Headquartered in Chennai, India, serving clients across the world.",
     featured: true,
   },
   { icon: PiggyBank, title: "Cost Effective", text: "High quality at competitive pricing." },
@@ -741,7 +738,7 @@ export function WhyUs() {
                   <p className={`mt-2 leading-relaxed ${featured ? "text-white/70" : "text-muted-foreground"}`}>{text}</p>
                   {featured && (
                     <p className="mt-5 flex flex-wrap items-center gap-2 text-sm font-semibold">
-                      {["Singapore", "India", "Worldwide"].map((c, j) => (
+                      {["Chennai", "India", "Worldwide"].map((c, j) => (
                         <span key={c} className="flex items-center gap-2">
                           {j > 0 && <ArrowRight className="size-3.5 text-gold" aria-hidden />}
                           <span className="rounded-full bg-white/10 px-3 py-1">{c}</span>
@@ -804,13 +801,26 @@ export function Contact() {
           <SectionHeading
             eyebrow="Contact"
             title="Let's talk about your next move."
-            text="Headquartered in Singapore with delivery teams in India — working with clients worldwide."
+            text="Visit us in Chennai or reach out from anywhere — we work with clients worldwide."
           />
           <ul className="reveal mt-10 space-y-4">
-            <ContactItem icon={MapPin} label="Offices">
-              {site.address.line1}
-              <br />
-              {site.address.line2}
+            <ContactItem icon={MapPin} label="Office">
+              <span className="block">{site.legalName}</span>
+              <address className="mt-1 block font-normal text-muted-foreground not-italic">
+                {site.address.lines.map((l) => (
+                  <span key={l} className="block">
+                    {l}
+                  </span>
+                ))}
+              </address>
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address.mapQuery)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-2 inline-flex items-center gap-1 text-sm text-brand hover:text-brand-dark"
+              >
+                Get directions <ArrowUpRight className="size-3.5" aria-hidden />
+              </a>
             </ContactItem>
             <ContactItem icon={Mail} label="Email">
               <a href={`mailto:${site.email}`} className="hover:text-brand">
@@ -830,8 +840,8 @@ export function Contact() {
 
         <div className="reveal relative min-h-[22rem] overflow-hidden rounded-[2rem] border border-border bg-sand lg:min-h-full">
           <iframe
-            title="4pro location on Google Maps"
-            src={`https://www.google.com/maps?q=${encodeURIComponent(site.address.mapQuery)}&z=12&output=embed`}
+            title="4Pro Consulting LLP, YMCA Royapuram, Chennai on Google Maps"
+            src={`https://www.google.com/maps?q=${encodeURIComponent(site.address.mapQuery)}&z=16&output=embed`}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             className="absolute inset-0 size-full border-0 grayscale-[0.35] sepia-[0.15]"
@@ -903,8 +913,16 @@ export function Footer() {
           ))}
         </FooterCol>
         <FooterCol title="Get in touch">
-          <li>{site.address.line1}</li>
-          <li>{site.address.line2}</li>
+          <li>
+            <span className="block font-semibold text-ink">{site.legalName}</span>
+            <address className="mt-1 not-italic">
+              {site.address.lines.map((l) => (
+                <span key={l} className="block">
+                  {l}
+                </span>
+              ))}
+            </address>
+          </li>
           <li>
             <a href={`mailto:${site.email}`} className="hover:text-brand">
               {site.email}
@@ -920,7 +938,7 @@ export function Footer() {
       <div className="border-t border-border">
         <div className="container-x flex flex-col items-center justify-between gap-3 py-6 text-sm text-muted-foreground sm:flex-row">
           <p>
-            © <Year /> 4pro. All rights reserved.
+            © <Year /> {site.legalName}. All rights reserved.
           </p>
           <p className="tracking-[0.15em] uppercase">Projects · Products · Programs · Promotions</p>
         </div>

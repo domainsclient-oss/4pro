@@ -27,7 +27,15 @@ const jsonLd = {
   description: site.description,
   email: site.email,
   telephone: site.phone,
-  address: { "@type": "PostalAddress", addressCountry: "SG" },
+  legalName: site.legalName,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
   areaServed: "Worldwide",
 };
 

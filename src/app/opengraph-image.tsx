@@ -57,7 +57,7 @@ export default async function Image() {
             }}
           >
             <div style={{ width: 40, height: 3, background: "#cc9833", marginRight: 16 }} />
-            Singapore · India · Worldwide
+            Chennai · India · Worldwide
           </div>
         </div>
 

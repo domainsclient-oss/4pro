@@ -3,14 +3,24 @@ export const site = {
   tagline: "Projects | Products | Programs | Promotions",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.4pro.global",
   description:
-    "4pro helps organizations grow, operate efficiently and create lasting impact — globally. Digital growth, BPO, staffing, training, software solutions and branded merchandise from Singapore and India.",
-  // TODO: replace with real contact details
+    "4pro helps organizations grow, operate efficiently and create lasting impact — globally. Digital growth, BPO, staffing, training, software solutions and branded merchandise from Chennai, India.",
+  legalName: "4Pro Consulting LLP",
   email: "info@4pro.org",
-  phone: "+65 6000 0000",
+  // TODO: replace with the real phone number
+  phone: "+91 44 0000 0000",
   address: {
-    line1: "Singapore (Headquarters)",
-    line2: "Delivery Centre — India",
-    mapQuery: "Singapore",
+    lines: [
+      "No: 158(131), 156(132) & 154(133),",
+      "3rd Floor, YMCA Royapuram,",
+      "PAN Rajarathinam Salai,",
+      "Chennai 600021, India",
+    ],
+    street: "No: 158(131), 156(132) & 154(133), 3rd Floor, YMCA Royapuram, PAN Rajarathinam Salai",
+    city: "Chennai",
+    region: "Tamil Nadu",
+    postalCode: "600021",
+    country: "IN",
+    mapQuery: "YMCA Royapuram, PAN Rajarathinam Salai, Chennai 600021",
   },
 } as const;
 
