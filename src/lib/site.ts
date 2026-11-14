@@ -1,7 +1,7 @@
 export const site = {
   name: "4pro",
   tagline: "Projects | Products | Programs | Promotions",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.4pro.global",
+  url: "https://www.4proconsulting.com",
   description:
     "4pro helps organizations grow, operate efficiently and create lasting impact — globally. Digital growth, BPO, staffing, training, software solutions and branded merchandise from Chennai, India.",
   legalName: "4Pro Consulting LLP",
