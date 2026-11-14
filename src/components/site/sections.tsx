@@ -814,9 +814,6 @@ export function Contact() {
                   </span>
                 ))}
               </address>
-              <span className="mt-1 block text-sm font-normal text-muted-foreground">
-                GST No: <span className="font-medium text-ink">{site.gstin}</span>
-              </span>
               <a
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address.mapQuery)}`}
                 target="_blank"
@@ -927,9 +924,6 @@ export function Footer() {
                 </span>
               ))}
             </address>
-            <span className="mt-2 block">
-              GST No: <span className="font-medium text-ink">{site.gstin}</span>
-            </span>
           </li>
           <li>
             <a href={`mailto:${site.email}`} className="hover:text-brand">

@@ -28,7 +28,6 @@ const jsonLd = {
   email: site.email,
   telephone: site.phone,
   legalName: site.legalName,
-  taxID: site.gstin,
   address: {
     "@type": "PostalAddress",
     streetAddress: site.address.street,

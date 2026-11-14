@@ -5,7 +5,6 @@ export const site = {
   description:
     "4pro helps organizations grow, operate efficiently and create lasting impact — globally. Digital growth, BPO, staffing, training, software solutions and branded merchandise from Chennai, India.",
   legalName: "4Pro Consulting LLP",
-  gstin: "33AABFZ8179L1ZI",
   email: "info@4proconsulting.com",
   // TODO: replace with the real phone number
   phone: "+91 44 0000 0000",
@@ -19,15 +18,14 @@ export const site = {
     lines: [
       "No: 158(131), 156(132) & 154(133),",
       "3rd Floor, YMCA Royapuram,",
-      "PAN Rajarathinam Salai,",
-      "Chennai 600021, India",
+      "Rajarathinam Salai, Chennai 600021.",
     ],
-    street: "No: 158(131), 156(132) & 154(133), 3rd Floor, YMCA Royapuram, PAN Rajarathinam Salai",
+    street: "No: 158(131), 156(132) & 154(133), 3rd Floor, YMCA Royapuram, Rajarathinam Salai",
     city: "Chennai",
     region: "Tamil Nadu",
     postalCode: "600021",
     country: "IN",
-    mapQuery: "YMCA Royapuram, PAN Rajarathinam Salai, Chennai 600021",
+    mapQuery: "YMCA Royapuram, Rajarathinam Salai, Chennai 600021",
   },
 } as const;
 
