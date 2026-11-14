@@ -1,9 +1,10 @@
 "use client";
 
 import * as React from "react";
-import { CheckCircle2, Send } from "lucide-react";
+import { CheckCircle2, Loader2, Send } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { site, services } from "@/lib/site";
+import { sendContact, type ContactState } from "@/app/actions/contact";
 import {
   Dialog,
   DialogContent,
@@ -27,34 +28,14 @@ export function useContact() {
 export function ContactProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setOpen] = React.useState(false);
   const [service, setService] = React.useState<string>("");
-  const [sent, setSent] = React.useState(false);
+  // Bumped on every open so the form (and its action state) starts fresh.
+  const [formKey, setFormKey] = React.useState(0);
 
   const open = React.useCallback((s?: string) => {
     setService(s ?? "");
-    setSent(false);
+    setFormKey((k) => k + 1);
     setOpen(true);
   }, []);
-
-  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const form = e.currentTarget;
-    if (!form.reportValidity()) return;
-    const d = new FormData(form);
-    const body = [
-      `Name: ${d.get("name")}`,
-      `Email: ${d.get("email")}`,
-      `Phone: ${d.get("phone") || "-"}`,
-      `Organization: ${d.get("company") || "-"}`,
-      `Interested in: ${d.get("service") || "-"}`,
-      "",
-      `${d.get("message")}`,
-    ].join("\n");
-    // No backend/database: hand the enquiry to the visitor's mail client.
-    window.location.href = `mailto:${site.email}?subject=${encodeURIComponent(
-      `New enquiry from ${d.get("name")}`,
-    )}&body=${encodeURIComponent(body)}`;
-    setSent(true);
-  }
 
   return (
     <ContactCtx.Provider value={{ open }}>
@@ -76,63 +57,100 @@ export function ContactProvider({ children }: { children: React.ReactNode }) {
             </DialogHeader>
           </div>
 
-          {sent ? (
-            <div className="flex flex-col items-center gap-3 px-6 py-12 text-center sm:px-8">
-              <CheckCircle2 className="size-12 text-brand" aria-hidden />
-              <h3 className="text-xl font-semibold">Thank you!</h3>
-              <p className="max-w-sm text-muted-foreground">
-                Your email app should have opened with your message. If it didn&apos;t, write to us at{" "}
-                <a className="font-medium text-brand underline" href={`mailto:${site.email}`}>
-                  {site.email}
-                </a>
-                .
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={onSubmit} className="grid gap-4 px-6 pt-2 pb-7 sm:grid-cols-2 sm:px-8">
-              <Field label="Full name" name="name" required autoComplete="name" />
-              <Field label="Work email" name="email" type="email" required autoComplete="email" />
-              <Field label="Phone" name="phone" type="tel" autoComplete="tel" />
-              <Field label="Organization" name="company" autoComplete="organization" />
-              <div className="grid gap-2 sm:col-span-2">
-                <Label htmlFor="service">I&apos;m interested in</Label>
-                <select
-                  id="service"
-                  name="service"
-                  defaultValue={service}
-                  className="h-11 rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40"
-                >
-                  <option value="">Select a service</option>
-                  {services.map((s) => (
-                    <option key={s} value={s}>
-                      {s}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="grid gap-2 sm:col-span-2">
-                <Label htmlFor="message">How can we help?</Label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows={4}
-                  placeholder="A few lines about your goals, timeline or challenge…"
-                  className="min-h-28 rounded-lg"
-                />
-              </div>
-              <button
-                type="submit"
-                className="group mt-1 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand px-6 font-semibold text-white transition hover:bg-brand-dark focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none sm:col-span-2"
-              >
-                Send Message
-                <Send className="size-4 transition group-hover:translate-x-0.5" aria-hidden />
-              </button>
-            </form>
-          )}
+          <ContactForm key={formKey} service={service} />
         </DialogContent>
       </Dialog>
     </ContactCtx.Provider>
+  );
+}
+
+const initialState: ContactState = { status: "idle" };
+
+function ContactForm({ service }: { service: string }) {
+  const [state, formAction, pending] = React.useActionState(sendContact, initialState);
+
+  if (state.status === "success") {
+    return (
+      <div role="status" className="flex flex-col items-center gap-3 px-6 py-12 text-center sm:px-8">
+        <CheckCircle2 className="size-12 text-brand" aria-hidden />
+        <h3 className="text-xl font-semibold">Thank you!</h3>
+        <p className="max-w-sm text-muted-foreground">
+          Your message has been sent. Our team will get back to you within one business day.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <form action={formAction} className="grid gap-4 px-6 pt-2 pb-7 sm:grid-cols-2 sm:px-8">
+      {/* Honeypot for bots — hidden from people and assistive tech */}
+      <div aria-hidden className="absolute -left-[9999px] size-px overflow-hidden">
+        <label>
+          Website
+          <input type="text" name="website" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+      <Field label="Full name" name="name" required maxLength={120} autoComplete="name" />
+      <Field label="Work email" name="email" type="email" required maxLength={200} autoComplete="email" />
+      <Field label="Phone" name="phone" type="tel" maxLength={40} autoComplete="tel" />
+      <Field label="Organization" name="company" maxLength={160} autoComplete="organization" />
+      <div className="grid gap-2 sm:col-span-2">
+        <Label htmlFor="service">I&apos;m interested in</Label>
+        <select
+          id="service"
+          name="service"
+          defaultValue={service}
+          className="h-11 rounded-lg border border-input bg-transparent px-3 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/40"
+        >
+          <option value="">Select a service</option>
+          {services.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className="grid gap-2 sm:col-span-2">
+        <Label htmlFor="message">
+          How can we help?<span className="text-brand">*</span>
+        </Label>
+        <Textarea
+          id="message"
+          name="message"
+          required
+          maxLength={5000}
+          rows={4}
+          placeholder="A few lines about your goals, timeline or challenge…"
+          className="min-h-28 rounded-lg"
+        />
+      </div>
+      {state.status === "error" && (
+        <p role="alert" className="rounded-lg bg-destructive/10 px-4 py-3 text-sm text-destructive sm:col-span-2">
+          {state.message} You can also write to us at{" "}
+          <a className="font-medium underline" href={`mailto:${site.email}`}>
+            {site.email}
+          </a>
+          .
+        </p>
+      )}
+      <button
+        type="submit"
+        disabled={pending}
+        className="group mt-1 inline-flex h-12 items-center justify-center gap-2 rounded-full bg-brand px-6 font-semibold text-white transition hover:bg-brand-dark focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-none disabled:cursor-wait disabled:opacity-70 sm:col-span-2"
+      >
+        {pending ? (
+          <>
+            Sending…
+            <Loader2 className="size-4 animate-spin" aria-hidden />
+          </>
+        ) : (
+          <>
+            Send Message
+            <Send className="size-4 transition group-hover:translate-x-0.5" aria-hidden />
+          </>
+        )}
+      </button>
+    </form>
   );
 }
 
